@@ -7,17 +7,16 @@ app = Flask(__name__)
 app.config.from_object(Config)
 
 
-@app.route('/')
+@app.route('/', methods=['GET','POST'])
 def index():
     items = get_items()
     return render_template('index.html',items=items)
 
-@app.route('/new', methods=['POST'])
+@app.route('/new', methods=['GET','POST'])
 def new():
-    add_item('new item')
+    add_item('item')
+    item = request.form.get('submit')
     return redirect(url_for('index'))
     
-
-
 if __name__ == '__main__':
     app.run()
